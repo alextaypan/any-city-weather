@@ -6,7 +6,6 @@ const API_KEY = "04fc84e5f5a3b3191025682530487cc6";
 const fetchWeather = async (cityName) => {
   try {
     const { data } = await axios.get(`?q=${cityName}&appid=${API_KEY}`);
-    console.log(data);
     return data;
   } catch (error) {
     console.log("Smth wrong happened", error.message);
