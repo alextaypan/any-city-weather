@@ -1,0 +1,13 @@
+import { RotatingLines } from "react-loader-spinner";
+// import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+// import s from './LoaderComponent.module.css';
+
+function Loader() {
+  return (
+    <div style={{ margin: "0 auto" }}>
+      <RotatingLines width="100" strokeColor="#6495ED" strokeWidth="1" />
+    </div>
+  );
+}
+
+export default Loader;
