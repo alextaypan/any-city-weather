@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import fetchWeather from "../../services/weatherAPI";
-import ErrorView from "../ErrorView/ErrorView";
+import DataWeatherInfo from "../DataWeatherInfo/DataWeatherInfo";
 import Loader from "../Loader";
 
 const Status = {
@@ -21,11 +22,12 @@ function WeatherInfo({ cityName }) {
     }
     fetchWeatherData();
     setStatus(Status.PENDING);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cityName]);
 
   const fetchWeatherData = async () => {
     try {
-      const { data } = await fetchWeather(cityName);
+      const data = await fetchWeather(cityName);
       const { name } = data;
       const { country } = data.sys;
       const { temp, temp_min, temp_max, feels_like, humidity } = data.main;
@@ -48,6 +50,7 @@ function WeatherInfo({ cityName }) {
       setStatus(Status.RESOLVED);
     } catch (error) {
       setError(error.message);
+      toast.error("There is no city with that name");
       setStatus(Status.REJECTED);
     }
   };
@@ -61,12 +64,12 @@ function WeatherInfo({ cityName }) {
   }
 
   if (status === Status.REJECTED) {
-    return <ErrorView error={error.message} />;
+    return null;
   }
 
-  // if (status === Status.RESOLVED) {
-  //   return <DataView weatherData={weatherData} />;
-  // }
+  if (status === Status.RESOLVED) {
+    return <DataWeatherInfo weatherData={weatherData} />;
+  }
 }
 
 export default WeatherInfo;
